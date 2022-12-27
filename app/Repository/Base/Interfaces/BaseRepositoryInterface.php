@@ -5,7 +5,7 @@ namespace App\Repository\Base\Interfaces;
 interface BaseRepositoryInterface
 {
     /**
-     * @param array $attributes
+     * @param  array  $attributes
      * @return mixed
      */
     public function insert(array $attributes);
@@ -17,18 +17,18 @@ interface BaseRepositoryInterface
     public function create(array $attributes);
 
     /**
-     * @param array $attributes
-     * @param int $id
+     * @param  array  $attributes
+     * @param  int  $id
      * @return mixed
      */
     public function update(array $attributes, int $id);
 
     /**
-     * @param array $columns
-     * @param array $with
-     * @param string $orderBy
-     * @param string $sortBy
-     * @return Collection
+     * @param  array  $columns
+     * @param  array  $with
+     * @param  string  $orderBy
+     * @param  string  $sortBy
+     * @return mixed
      */
     public function all(array $columns = ['*'], array $with = [], string $orderBy = 'id', string $sortBy = 'desc');
 
@@ -54,5 +54,4 @@ interface BaseRepositoryInterface
      * @return bool
      */
     public function delete(int $id): bool;
-
 }

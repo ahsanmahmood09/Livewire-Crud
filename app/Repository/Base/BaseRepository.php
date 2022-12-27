@@ -2,6 +2,8 @@
 
 namespace App\Repository\Base;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Repository\Base\Interfaces\BaseRepositoryInterface;
 
@@ -23,7 +25,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  array  $attributes
      * @return mixed
      */
-    public function create(array $attributes): mixed
+    public function create(array $attributes)
     {
         return $this->model->create($attributes);
     }
@@ -41,9 +43,9 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * @param  int  $id
      * @param  array  $with
-     * @return mixed
+     * @return Builder|Builder[]|Collection|Model|null
      */
-    public function find(int $id, $with = []): mixed
+    public function find(int $id, array $with = [])
     {
         return $this->model->with($with)->find($id);
     }
@@ -55,7 +57,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  string  $sortBy
      * @return mixed
      */
-    public function findBy(array $data, array $with = [], string $orderBy = 'id', string $sortBy = 'asc'): mixed
+    public function findBy(array $data, array $with = [], string $orderBy = 'id', string $sortBy = 'asc')
     {
         return $this->model->where($data)->with($with)->orderBy($orderBy, $sortBy)->get();
     }
@@ -66,7 +68,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  array  $withCount
      * @return mixed
      */
-    public function findOneBy(array $data, array $with = [], array $withCount = []): mixed
+    public function findOneBy(array $data, array $with = [], array $withCount = [])
     {
         return $this->model->where($data)->with($with)->withCount($withCount)->first();
     }
@@ -82,9 +84,9 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * @param  array  $attributes
-     * @return mixed
+     * @return bool
      */
-    public function insert(array $attributes): mixed
+    public function insert(array $attributes): bool
     {
         return $this->model->query()->insert($attributes);
     }
@@ -94,12 +96,10 @@ class BaseRepository implements BaseRepositoryInterface
      * @param  array  $with
      * @param  string  $orderBy
      * @param  string  $sortBy
-     * @return Collection
+     * @return Builder[]|Collection
      */
     public function all(array $columns = ['*'], array $with = [], string $orderBy = 'id', string $sortBy = 'asc')
     {
         return $this->model->with($with)->orderBy($orderBy, $sortBy)->get($columns);
     }
-
-
 }

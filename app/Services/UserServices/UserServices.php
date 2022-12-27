@@ -31,9 +31,7 @@ class UserServices
         array $with = [],
         string $orderBy = 'id',
         string $sortBy = 'asc'
-    )
-    {
+    ): Collection {
         return $this->userRepository->all($columns, $with, $orderBy, $sortBy);
     }
-
 }

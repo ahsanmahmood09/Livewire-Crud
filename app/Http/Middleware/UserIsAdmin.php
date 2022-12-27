@@ -19,11 +19,12 @@ class UserIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Auth::user()->hasRole(config('role_names.admin'))) {
+        if(! Auth::user()->hasRole(config('role_names.admin')) ) {
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect('/login')->with('message','You are not Authorized!');
+
+            return redirect('/login')->with('message','You are not Authorized To Login!');
         }
 
         return $next($request);

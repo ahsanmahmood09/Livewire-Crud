@@ -18,11 +18,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::middleware([
-    'auth',
-    config('jetstream.auth_session'),
-    'verified',
-    'user.isAdmin',
-])->group(function () {
+Route::middleware(['auth', config('jetstream.auth_session'), 'verified', 'user.isAdmin',])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });

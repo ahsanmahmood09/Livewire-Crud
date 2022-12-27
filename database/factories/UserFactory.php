@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Laravel\Jetstream\Features;
 
 class UserFactory extends Factory
 {
@@ -29,11 +28,10 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'surname' => $this->faker->name(),
             'mobile_number' => $this->faker->numberBetween(0, 41415155115),
-            'dob' => $this->faker->dateTimeBetween('1999-01-01', '2023-12-31')
-                ->format('d/m/Y'),
+            'dob' => $this->faker->dateTimeBetween('1999-01-01', '2023-12-31')->format('d/m/Y'),
             'language' => 'Africans',
-            'south_african_id'=> $this->faker->uuid(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'south_african_id' => $this->faker->uuid(),
+            'password' => Hash::make('12345678'),
             'remember_token' => Str::random(10),
         ];
     }
@@ -45,20 +43,22 @@ class UserFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             return [
                 'email_verified_at' => null,
             ];
         });
     }
 
+    /**
+     * @return Factory
+     */
     public function verified(): Factory
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             return [
                 'email_verified_at' => now(),
             ];
         });
     }
-
 }

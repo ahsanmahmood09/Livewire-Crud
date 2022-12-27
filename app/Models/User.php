@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\Users\User.
+ * App\Models\User.
  *
  * @property int $id
  * @property string $name

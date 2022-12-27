@@ -14,9 +14,7 @@ class Dashboard extends Component
      * @param UserServices $userServices
      * @return void
      */
-    public function boot(
-        UserServices $userServices
-    )
+    public function boot(UserServices $userServices)
     {
         $this->userServices = $userServices;
     }
@@ -39,5 +37,4 @@ class Dashboard extends Component
             ->extends('layouts.app')
             ->section('content');
     }
-
 }

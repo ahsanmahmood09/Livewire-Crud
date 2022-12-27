@@ -14,7 +14,7 @@ class InterestFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=> $this->faker->name(),
+            'name'=> $this->faker->realText,
         ];
     }
 }

@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
     private function createAdminUser()
     {
         $user = User::factory()->verified()->create([
-            'email' => 'Admin@Solidarity.co.za',
+            'email' => 'admin@Solidarity.co.za',
             'password' => Hash::make('12345678'),
         ]);
 
@@ -44,6 +44,7 @@ class UserSeeder extends Seeder
         ]);
 
         $interests = (new InterestFactory())->times(5)->create();
+
         $interestIds = $interests->map(function (Interest $interest) {
             return $interest->id;
         });
