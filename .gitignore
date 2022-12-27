@@ -20,9 +20,7 @@ db-reset.sh
 .env.uat
 public/mix-manifest.json
 aliases
-.DS_Store
 public/.DS_Store
 public/images/.DS_Store
 public/images/svg/.DS_Store
-.DS_Store
 .DS_Store

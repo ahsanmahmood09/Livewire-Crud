@@ -54,4 +54,9 @@ interface BaseRepositoryInterface
      * @return bool
      */
     public function delete(int $id): bool;
+
+    /**
+     * @return mixed
+     */
+    public function newModelInstance();
 }

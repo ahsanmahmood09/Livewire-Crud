@@ -3,7 +3,6 @@
 namespace App\Services\UserServices;
 
 use App\Repository\Users\Interfaces\UserRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 
 class UserServices
 {
@@ -20,18 +19,32 @@ class UserServices
     }
 
     /**
-     * @param  array  $columns
+     * @param  int  $perPage
+     * @param  string  $searchByName
      * @param  array  $with
-     * @param  string  $orderBy
-     * @param  string  $sortBy
-     * @return Collection
+     * @return mixed
      */
-    public function allUsers(
-        array $columns = ['*'],
-        array $with = [],
-        string $orderBy = 'id',
-        string $sortBy = 'asc'
-    ): Collection {
-        return $this->userRepository->all($columns, $with, $orderBy, $sortBy);
+    public function getAllUsersPaginatedResults(
+        int $perPage,
+        string $searchByName,
+        array $with = []
+    )
+    {
+        $users = $this->userRepository->newModelInstance()::query();
+
+        if (! blank($searchByName)) {
+            $users->where('name', 'like', '%'.$searchByName.'%');
+        }
+
+        return $users->with($with)->paginate($perPage);
+    }
+
+    /**
+     * @param  int  $id
+     * @return bool
+     */
+    public function deleteUser(int $id): bool
+    {
+        return $this->userRepository->delete($id);
     }
 }

@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
     private function createAdminUser()
     {
         $user = User::factory()->verified()->create([
-            'email' => 'admin@Solidarity.co.za',
+            'email' => 'admin@solidarity.co.za',
             'password' => Hash::make('12345678'),
         ]);
 

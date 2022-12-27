@@ -9,6 +9,10 @@ class Dashboard extends Component
 {
     protected $userServices;
 
+    public $searchByName = '';
+
+    public $perPage = 5;
+
     /**
      * Summary of boot
      * @param UserServices $userServices
@@ -25,7 +29,11 @@ class Dashboard extends Component
      */
     public function getAllUsersProperty()
     {
-        return $this->userServices->allUsers(['*'], ['interests']);
+        return $this->userServices->getAllUsersPaginatedResults(
+            $this->perPage,
+            $this->searchByName,
+            ['interests']
+        );
     }
 
     /**

@@ -102,4 +102,12 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->with($with)->orderBy($orderBy, $sortBy)->get($columns);
     }
+
+    /**
+     * @return mixed
+     */
+    public function newModelInstance()
+    {
+        return new $this->model();
+    }
 }
