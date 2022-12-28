@@ -37,6 +37,14 @@ class DeleteAction extends ModalComponent
     }
 
     /**
+     * @return string
+     */
+    public static function modalMaxWidth(): string
+    {
+        return '2xl';
+    }
+
+    /**
      * @return Application|RedirectResponse|Redirector
      */
     public function deleteItem()

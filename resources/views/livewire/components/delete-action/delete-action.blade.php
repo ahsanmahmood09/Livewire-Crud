@@ -11,10 +11,10 @@
         </p>
     </div>
 
-    <div class="flex text-center items-center justify-center">
-        <div class="border-blue-400 border-1 rounded-full px-4">
+    <div class="flex flex-row text-center items-center justify-center">
+        <div class="border-blue-400 border-2 rounded-2xl px-4 mr-2">
             <button
-                    class="text-sm hover:text-blue-400"
+                    class="text-sm hover:text-blue-400 p-2"
                     type="button"
                     wire:click="deleteItem"
             >
@@ -22,9 +22,9 @@
             </button>
         </div>
 
-        <div class="border-blue-400 border-1 rounded-full px-4">
+        <div class="border-blue-400 border-2 rounded-2xl px-4">
             <button
-                    class="ml-2 text-sm hover:text-blue-400"
+                    class="text-sm hover:text-blue-400 p-2"
                     type="button"
                     wire:click="$emit('closeModal')"
             >

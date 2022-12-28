@@ -28,6 +28,15 @@
                     <div class="flex">
                         <div class="w-full">
                             <x-navbar />
+
+                            @if (session('primary'))
+                                <div class="flex items-center justify-center text-center p-2">
+                                    <x-flash>
+                                        {{ session()->pull('primary') }}
+                                    </x-flash>
+                                </div>
+                            @endif
+
                             @yield('content')
                         </div>
                     </div>

@@ -1,17 +1,9 @@
 <div>
-    @if (session('primary'))
-        <div class="flex items-center justify-center text-center">
-            <x-flash>
-                {{ session()->pull('primary') }}
-            </x-flash>
-        </div>
-    @endif
-
     <div class="flex flex-col mt-8 p-2 px-6">
         <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
                 <x-input
-                        placeholder="Search By Name"
+                        placeholder="Search By Email"
                         class="mb-6"
                         wire:model.debounce.500ms="searchByName"
                 />
@@ -95,9 +87,11 @@
                             </tr>
                         @empty
                             <tr>
-                                <p class="text-lg text-center">
-                                    No Users Found
-                                </p>
+                                <td colspan="5">
+                                    <div class="text-lg items-center justify-center flex p-4 text-center">
+                                        No Users Found
+                                    </div>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
