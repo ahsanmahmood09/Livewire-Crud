@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Interest;
 use App\Models\User;
-use Database\Factories\InterestFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,18 +41,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        $interests = (new InterestFactory())->times(5)->create();
-
-        $interestIds = $interests->map(function (Interest $interest) {
-            return $interest->id;
-        });
-
         foreach ($nonAdminUsers as $user)
         {
             $this->assignUserRole($user, config('role_names.non_admins'));
 
             // assign interests to Users
-            $user->interests()->sync($interestIds->toArray());
+            $user->interests()->sync(array_rand([
+                '1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18'
+            ],4));
         }
     }
 

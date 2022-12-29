@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'surname' => $this->faker->name(),
             'mobile_number' => $this->faker->numberBetween(0, 41415155115),
-            'dob' => $this->faker->dateTimeBetween('1999-01-01', '2023-12-31')->format('d/m/Y'),
+            'dob' => $this->faker->dateTimeBetween('1999-01-01', '2023-12-31')->format('Y/m/d'),
             'language' => 'Africans',
             'south_african_id' => $this->faker->uuid(),
             'password' => Hash::make('12345678'),

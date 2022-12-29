@@ -2,33 +2,24 @@
     <div class="flex flex-col mt-8 p-2 px-6">
         <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                <x-input
-                        placeholder="Search By Email"
-                        class="mb-6"
-                        wire:model.debounce.500ms="searchByName"
-                />
+                <div class="flex justify-between items-center p-2 px-6">
+                    <button class="p-2 px-6 rounded-md bg-zinc-600 text-white"
+                            onclick='Livewire.emit(
+                                                "openModal",
+                                                "components.create-edit-user-form.create-edit-user-form",
+                                           )'>
+                        Add new User
+                    </button>
+                    <x-input
+                            placeholder="Search By Email"
+                            class="mb-6 rounded-full border-blue-400"
+                            type="text"
+                            wire:model.debounce.500ms="searchByEmail"
+                    />
+                </div>
 
                 <table class="min-w-full">
-                    <thead>
-                        <tr>
-                            <th
-                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                Name</th>
-                            <th
-                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                Email</th>
-                            <th
-                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                Status</th>
-                            <th
-                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                Edit</th>
-                            <th
-                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                Delete</th>
-                        </tr>
-                    </thead>
-
+                    <x-tableHead />
                     <tbody class="bg-white">
                         @forelse($this->allUsers as $user)
                             <tr>
@@ -47,15 +38,35 @@
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <span
-                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800
-                                                bg-green-100 rounded-full"
-                                    >
-                                        Active
-                                    </span>
+                                    <div class="text-sm leading-5 text-gray-500">{{ $user->surname }}</div>
                                 </td>
 
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="text-sm leading-5 text-gray-500">{{ $user->mobile_number }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="text-sm leading-5 text-gray-500">{{ $user->language }}</div>
+                                </td>
+
+                                <!--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">-->
+<!--                                    <span-->
+<!--                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800-->
+<!--                                                bg-green-100 rounded-full"-->
+<!--                                    >-->
+<!--                                        Active-->
+<!--                                    </span>-->
+<!--                                </td>-->
+
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
+                                    onclick='Livewire.emit(
+                                                "openModal",
+                                                "components.create-edit-user-form.create-edit-user-form",
+                                                {{ json_encode([
+                                                    "userId" => $user->id,
+                                                   ])
+                                                }}
+                                           )'>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -88,7 +99,7 @@
                         @empty
                             <tr>
                                 <td colspan="5">
-                                    <div class="text-lg items-center justify-center flex p-4 text-center">
+                                    <div class="text-lg items-center justify-center flex p-6 text-center">
                                         No Users Found
                                     </div>
                                 </td>

@@ -10,10 +10,11 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <wireui:scripts />
     @livewireStyles
 
 </head>
-<body class="antialiased mx-auto">
+<body class="antialiased mx-auto overflow-hidden">
 
 <div class="min-h-screen bg-secondary-50">
     <main class="mx-auto member-body-max-width">
@@ -24,11 +25,10 @@
             </aside>
 
             <section class="flex-[0.8]">
+                <x-navbar />
                 <div class="flex flex-col h-full lg:py-6 py-3 md:px-0 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 ">
                     <div class="flex">
                         <div class="w-full">
-                            <x-navbar />
-
                             @if (session('primary'))
                                 <div class="flex items-center justify-center text-center p-2">
                                     <x-flash>

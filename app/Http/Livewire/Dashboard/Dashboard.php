@@ -9,7 +9,7 @@ class Dashboard extends Component
 {
     protected $userServices;
 
-    public $searchByName = '';
+    public $searchByEmail = '';
 
     public $perPage = 5;
 
@@ -31,7 +31,7 @@ class Dashboard extends Component
     {
         return $this->userServices->getAllUsersPaginatedResults(
             $this->perPage,
-            $this->searchByName,
+            $this->searchByEmail,
             ['interests']
         );
     }
