@@ -11,5 +11,7 @@ Please Follow Below Steps For Project Setup
 
 ## Other Information
 
+- Please copy of .env.example file to .env file and make changes accordingly
 - You can log into the application using the admin@solidarity.co.za email address and "12345678" as password
 - Only the above user has permission to log into the application and see the other users.
+- Every created user will have a default password of "12345678" but they won't be able to login because only administrator can log into the application.

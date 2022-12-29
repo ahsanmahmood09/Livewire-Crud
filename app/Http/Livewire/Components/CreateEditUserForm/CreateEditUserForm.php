@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\CreateEditUserForm;
 
+use App\Mail\UserAddedToSystem;
 use App\Services\InterestServices\InterestServices;
 use App\Services\UserServices\UserServices;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,8 +11,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Validation\Rule;
 
 class CreateEditUserForm extends ModalComponent
 {
@@ -47,7 +50,7 @@ class CreateEditUserForm extends ModalComponent
         return [
             'name' => 'required',
             'surname' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($this->user ? $this->user->id : '')],
             'mobile_number' => 'required|max:13',
             'dob' => 'required|date',
             'language' => 'required',
@@ -109,6 +112,15 @@ class CreateEditUserForm extends ModalComponent
     }
 
     /**
+     * @param  string  $roleName
+     * @return void
+     */
+    private function assignUserRole(string $roleName)
+    {
+        $this->user->assignRole($roleName);
+    }
+
+    /**
      * @return Application|RedirectResponse|Redirector
      */
     public function submit()
@@ -122,12 +134,21 @@ class CreateEditUserForm extends ModalComponent
             $this->user = $this->userServices->createUser($userData);
 
             $message = "The user has been added successfully";
+
+            Mail::to($this->email)
+                ->send(
+                    new UserAddedToSystem([
+                        'name'  => $this->name,
+                        'email' => $this->email
+                    ])
+                );
         }
         else {
             $this->user = $this->userServices->updateUser($userData, $this->user->id);
             $message = "The user has been edited successfully";
         }
 
+        $this->assignUserRole(config('role_names.non_admins'));
         $this->attachUserInterests();
 
         Session::flash(

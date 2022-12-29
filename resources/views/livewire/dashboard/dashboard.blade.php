@@ -10,6 +10,7 @@
                                            )'>
                         Add new User
                     </button>
+
                     <x-input
                             placeholder="Search By Email"
                             class="mb-6 rounded-full border-blue-400"
@@ -20,6 +21,7 @@
 
                 <table class="min-w-full">
                     <x-tableHead />
+
                     <tbody class="bg-white">
                         @forelse($this->allUsers as $user)
                             <tr>
