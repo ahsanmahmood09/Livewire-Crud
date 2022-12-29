@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('surname');
-            $table->string('mobile_number');
+            $table->string('mobile_number', 13);
             $table->string('dob');
             $table->string('language');
             $table->uuid('south_african_id');

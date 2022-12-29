@@ -36,7 +36,7 @@ class UserServices
             $users->where('email', 'like', '%' . $searchByEmail . '%');
         }
 
-        return $users->with($with)->paginate($perPage);
+        return $users->whereNotIn('email', [auth()->user()->email])->with($with)->paginate($perPage);
     }
 
     /**
@@ -63,7 +63,7 @@ class UserServices
      */
     public function createUser(array $attributes)
     {
-        return $this->userRepository->insert($attributes);
+        return $this->userRepository->create($attributes);
     }
 
     /**

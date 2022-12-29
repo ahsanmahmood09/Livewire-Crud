@@ -7,7 +7,10 @@ use App\Services\UserServices\UserServices;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use LivewireUI\Modal\ModalComponent;
 
 class CreateEditUserForm extends ModalComponent
@@ -44,9 +47,9 @@ class CreateEditUserForm extends ModalComponent
         return [
             'name' => 'required',
             'surname' => 'required',
-            'email' => 'required|email',
-            'mobile_number' => 'required',
-            'dob' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'mobile_number' => 'required|max:13',
+            'dob' => 'required|date',
             'language' => 'required',
             'south_african_id' => 'required',
             'interests' => 'required|array',
@@ -81,7 +84,7 @@ class CreateEditUserForm extends ModalComponent
             $this->language         = $this->user->language;
             $this->mobile_number    = $this->user->mobile_number;
             $this->south_african_id = $this->user->south_african_id;
-            //$this->interests        = $this->user->interests(;
+            $this->interests        = $this->user->interests->pluck('id');
 
             return $this->heading = 'Update User';
         }
@@ -102,28 +105,37 @@ class CreateEditUserForm extends ModalComponent
      */
     private function attachUserInterests()
     {
-        $this->user->sync($this->interests);
+        $this->user->interests()->sync($this->interests);
     }
 
     /**
-     * @return void
+     * @return Application|RedirectResponse|Redirector
      */
     public function submit()
     {
-        dd($this->user->interests->get());
         $userData = $this->validate();
         unset($userData['interests']);
 
-        if ($this->user)
+        if (! $this->user)
         {
             $userData['password'] = Hash::make('12345678');
-            $this->user = $this->userServices->updateUser($userData, $this->user->id);
+            $this->user = $this->userServices->createUser($userData);
+
+            $message = "The user has been added successfully";
         }
         else {
-            $this->user = $this->userServices->createUser($userData);
+            $this->user = $this->userServices->updateUser($userData, $this->user->id);
+            $message = "The user has been edited successfully";
         }
 
         $this->attachUserInterests();
+
+        Session::flash(
+            'primary',
+            $message
+        );
+
+        return redirect(route('dashboard'));
     }
 
     /**
