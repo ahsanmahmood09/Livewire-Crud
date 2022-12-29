@@ -19,9 +19,9 @@ class UserServices
     }
 
     /**
-     * @param int $perPage
-     * @param string $searchByName
-     * @param array $with
+     * @param  int  $perPage
+     * @param  string  $searchByEmail
+     * @param  array  $with
      * @return mixed
      */
     public function getAllUsersPaginatedResults(
@@ -54,14 +54,25 @@ class UserServices
      */
     public function findOneUserById(int $id)
     {
-        return $this->userRepository->findBy(['id' => $id],['interests']);
+        return $this->userRepository->findBy(['id' => $id], ['interests']);
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function createUser(array $attributes) {
+    public function createUser(array $attributes)
+    {
         return $this->userRepository->insert($attributes);
+    }
+
+    /**
+     * @param  array  $attributes
+     * @param  int  $id
+     * @return mixed
+     */
+    public function updateUser(array $attributes, int $id)
+    {
+        return $this->userRepository->update($attributes, $id);
     }
 }

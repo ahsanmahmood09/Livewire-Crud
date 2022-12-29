@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\CreateEditUserForm;
 
+use App\Services\InterestServices\InterestServices;
 use App\Services\UserServices\UserServices;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -13,6 +14,8 @@ class CreateEditUserForm extends ModalComponent
 {
     protected $userServices;
 
+    protected $interestServices;
+
     public $heading;
 
     public $interests = [];
@@ -20,8 +23,6 @@ class CreateEditUserForm extends ModalComponent
     public $name;
 
     public $email;
-
-    public $password;
 
     public $surname;
 
@@ -33,42 +34,12 @@ class CreateEditUserForm extends ModalComponent
 
     public $south_african_id;
 
-
-    /**
-     * Summary of boot
-     * @param UserServices $userServices
-     * @return void
-     */
-    public function boot(UserServices $userServices)
-    {
-        $this->userServices = $userServices;
-    }
-
-    /**
-     * @param int|null $userId
-     * @return string|void
-     */
-    public function mount(int $userId = null)
-    {
-        if ($userId) {
-            $user = $this->userServices->findOneUserById($userId)[0];
-            $this->name = $user->name;
-            $this->surname = $user->surname;
-            $this->email = $user->email;
-            $this->dob = $user->dob;
-            $this->language = $user->language;
-            $this->mobile_number = $user->mobile_number;
-            $this->south_african_id = $user->south_african_id;
-            $this->interests = $user->interests->toArray();
-            return $this->heading = 'Update User';
-        }
-        $this->heading = 'Add User';
-    }
+    public $user;
 
     /**
      * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'name' => 'required',
@@ -78,8 +49,60 @@ class CreateEditUserForm extends ModalComponent
             'dob' => 'required',
             'language' => 'required',
             'south_african_id' => 'required',
-            'interests' => 'required',
+            'interests' => 'required|array',
         ];
+    }
+
+    /**
+     * Summary of boot
+     * @param  UserServices  $userServices
+     * @param  InterestServices  $interestServices
+     * @return void
+     */
+    public function boot(UserServices $userServices, InterestServices $interestServices)
+    {
+        $this->userServices = $userServices;
+        $this->interestServices = $interestServices;
+    }
+
+    /**
+     * @param int|null $userId
+     * @return string|void
+     */
+    public function mount(int $userId = null)
+    {
+        if ($userId) {
+            $this->user = $this->userServices->findOneUserById($userId)[0];
+
+            $this->name             = $this->user->name;
+            $this->surname          = $this->user->surname;
+            $this->email            = $this->user->email;
+            $this->dob              = $this->user->dob;
+            $this->language         = $this->user->language;
+            $this->mobile_number    = $this->user->mobile_number;
+            $this->south_african_id = $this->user->south_african_id;
+            //$this->interests        = $this->user->interests(;
+
+            return $this->heading = 'Update User';
+        }
+
+        $this->heading = 'Add User';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllInterestsProperty()
+    {
+        return $this->interestServices->getAllInterests();
+    }
+
+    /**
+     * @return void
+     */
+    private function attachUserInterests()
+    {
+        $this->user->sync($this->interests);
     }
 
     /**
@@ -87,9 +110,20 @@ class CreateEditUserForm extends ModalComponent
      */
     public function submit()
     {
-        $data = $this->validate();
+        dd($this->user->interests->get());
+        $userData = $this->validate();
+        unset($userData['interests']);
 
-        $this->userServices->createUser($data);
+        if ($this->user)
+        {
+            $userData['password'] = Hash::make('12345678');
+            $this->user = $this->userServices->updateUser($userData, $this->user->id);
+        }
+        else {
+            $this->user = $this->userServices->createUser($userData);
+        }
+
+        $this->attachUserInterests();
     }
 
     /**

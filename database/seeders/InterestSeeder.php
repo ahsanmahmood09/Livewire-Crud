@@ -49,4 +49,3 @@ class InterestSeeder extends Seeder
         ];
     }
 }
-

@@ -58,7 +58,7 @@
 <!--                                    </span>-->
 <!--                                </td>-->
 
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
+                                <td class="px-6 py-4 text-sm leading-5 cursor-pointer text-gray-500 whitespace-no-wrap border-b border-gray-200"
                                     onclick='Livewire.emit(
                                                 "openModal",
                                                 "components.create-edit-user-form.create-edit-user-form",
@@ -98,7 +98,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5">
+                                <td colspan="12">
                                     <div class="text-lg items-center justify-center flex p-6 text-center">
                                         No Users Found
                                     </div>
