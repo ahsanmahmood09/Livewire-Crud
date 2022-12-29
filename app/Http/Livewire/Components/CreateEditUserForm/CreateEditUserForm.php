@@ -89,7 +89,6 @@ class CreateEditUserForm extends ModalComponent
     {
         $data = $this->validate();
 
-        dd($data);
         $this->userServices->createUser($data);
     }
 
