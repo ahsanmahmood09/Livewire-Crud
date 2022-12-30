@@ -19,7 +19,6 @@ class UserAddedToSystem extends Mailable
      */
     public function __construct(array $data)
     {
-        $this->queue = config('custom_queues.email');
         $this->data = $data;
     }
 

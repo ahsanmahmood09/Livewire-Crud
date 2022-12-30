@@ -71,17 +71,30 @@
 
         <div class="rounded-md text-white mt-6">
             <button
-                    class="bg-zinc-500 text-sm p-2 w-full mb-2 rounded"
-                    type="submit"
+               class="bg-zinc-500 text-sm p-2 w-full mb-2 rounded flex flex-row items-center gap-2 justify-center"
+               type="submit"
             >
-                Submit
+                <span
+                  wire:target="submit"
+                  wire:loading.remove
+                  class="flex flex-row items-center gap-2 justify-center"
+                >
+                    Submit
+                    <x-heroicon-o-arrow-circle-right class="w-5 h-5"/>
+                </span>
+
+                <x-loader
+                    wire:target="submit"
+                    wire:loading
+                />
             </button>
+
             <button
-                    class="bg-zinc-500 text-sm p-2 w-full rounded"
+                    class="bg-zinc-500 text-sm p-2 w-full rounded flex flex-row items-center gap-2 justify-center"
                     type="button"
                     wire:click="$emit('closeModal')"
             >
-                close modal
+                Close <x-heroicon-o-x-circle class="w-5 h-5"/>
             </button>
         </div>
     </form>

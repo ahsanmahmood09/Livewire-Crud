@@ -1,13 +1,13 @@
-<x-guest-layout>
-    <div class="flex justify-center items-center mt-20">
-        <div class="bg-white shadow-md p-10 sm:p-20 md:p-32 rounded-md">
-            <p class="text-4xl font-bold text-blue-600 text-center">Livewire</p>
-            <p class="text-xl mt-6">
-                Hello  <span class="text-2xl font-bold">{{ $data['name'] }}</span>,
-            </p>
-            <p class="mt-5 text-xl">
-                Your account with email {{ $data['email'] }} has been created successfully.
-            </p>
-        </div>
+@extends('layouts.mail')
+
+@section('content')
+    <div class="email-inner">
+        <p class="main-heading">Livewire</p>
+        <p class="email-text">
+            Hello <span class="">{{ $data['name'] ?: '' }}</span>,
+        </p>
+        <p class="email-text">
+            Your account with email <span>{{ $data['email'] ?: '' }}</span> has been created successfully.
+        </p>
     </div>
-</x-guest-layout>
+@endsection
